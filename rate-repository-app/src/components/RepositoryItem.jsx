@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-const RepositoryItem = ({item}) => {
+const RepositoryItem = ({ item }) => {
     return (
         <View>
             <Text>Name: {item.fullName}</Text>
@@ -8,8 +8,8 @@ const RepositoryItem = ({item}) => {
             <Text>Language: {item.language}</Text>
             <Text>Stars: {item.stargazersCount}</Text>
             <Text>Forks: {item.forksCount}</Text>
-            <Text>Number of reviews: {item.reviewCount}</Text>
-            <Text>Avg. rating: {item.ratingAverage}</Text>
+            <Text>Reviews: {item.reviewCount}</Text>
+            <Text>Rating: {item.ratingAverage}</Text>
         </View>
     );
 };
