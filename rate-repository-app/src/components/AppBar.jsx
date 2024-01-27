@@ -1,6 +1,7 @@
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import Text from './Text';
+import { Link } from 'react-router-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -12,19 +13,23 @@ const styles = StyleSheet.create({
         height: 100,
         padding: 20,
         justify: "space-evenly",
-        alignItems: "flex-end"
+        alignItems: "flex-end",
     },
     text: {
         flexGrow: 0,
-        color: "white"
+        color: "white",
+        marginRight: 15
     }
 });
 
 const AppBar = () => {
     return <View style={styles.container}>
-        <Pressable onPress={() => console.log("fuck the police")}>
+        <Link to="/">
             <Text style={styles.text} fontSize="subheading" >Repositories</Text>
-        </Pressable>
+        </Link>
+        <Link to="/signin">
+            <Text style={styles.text} fontSize="subheading" >Sign in</Text>
+        </Link>
     </View>;
 };
 
