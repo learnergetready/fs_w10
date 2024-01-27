@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     },
     text: {
         flexGrow: 0,
-        color: "seashell"
+        color: "white"
     }
 });
 
