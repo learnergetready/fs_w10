@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
         margin: 10
     },
     errorStyle: {
-        borderColor: "red"
+        borderColor: theme.colors.errorRed
     }
 });
 
