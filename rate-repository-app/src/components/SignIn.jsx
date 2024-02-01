@@ -5,6 +5,7 @@ import Text from "./Text";
 import theme from "../theme";
 import * as yup from "yup";
 import useSignIn from "../hooks/useSignIn";
+import { useNavigate } from "react-router-native";
 
 const initialValues = {
     username: "",
@@ -34,15 +35,15 @@ const validationSchema = yup.object().shape({
 
 
 const SignIn = () => {
+    const navigate = useNavigate();
     const [signIn] = useSignIn();
 
     const onSubmit = async (values, formikBag) => {
         const { username, password } = values;
-        console.log({ username, password });
-
         try {
-            const { data } = await signIn( username, password );
-            console.log(data);
+            const { authenticate } = await signIn( username, password );
+            console.log(authenticate);
+            navigate("/");
         } catch (e) {
             console.log(e);
         }
