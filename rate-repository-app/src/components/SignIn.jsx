@@ -33,6 +33,16 @@ const validationSchema = yup.object().shape({
         .required()
 });
 
+export const SignInContainer = ({ onSubmit }) => {
+    return (
+        <View style={{ backgroundColor: "white", paddingTop: 5, paddingBottom: 15 }}>
+            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                { ({ handleSubmit }) => <SignInForm onSubmit={handleSubmit}/>}
+            </Formik>
+        </View>
+    );
+};
+
 
 const SignIn = () => {
     const navigate = useNavigate();
@@ -50,13 +60,7 @@ const SignIn = () => {
         formikBag.resetForm();
     };
 
-    return (
-        <View style={{ backgroundColor: "white", paddingTop: 5, paddingBottom: 15 }}>
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                { ({ handleSubmit }) => <SignInForm onSubmit={handleSubmit}/>}
-            </Formik>
-        </View>
-    );
+    return <><SignInContainer onSubmit={onSubmit} /></>;
 };
 
 export default SignIn;
