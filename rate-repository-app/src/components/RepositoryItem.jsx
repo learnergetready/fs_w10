@@ -1,6 +1,7 @@
 import { Image, StyleSheet, View } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
+import { numberInKs } from "../utils";
 
 const styles = StyleSheet.create({
     container1: {
@@ -31,19 +32,17 @@ const styles = StyleSheet.create({
 });
 
 const BottomViews = ({ number, text }) => {
-    const preparedNumber = number > 999
-        ? (Math.round(number/100)/10)+"k"
-        : number;
+    
     return (
         <View style={{ alignItems: "center", justifyContent:"center" }}>
-            <Text fontWeight="bold" style={{ marginBottom: 5 }}>{preparedNumber}</Text>
+            <Text fontWeight="bold" style={{ marginBottom: 5 }}>{numberInKs(number)}</Text>
             <Text>{text}</Text>
         </View>
     );};
 
 const RepositoryItem = ({ item }) => {
     return (
-        <View style={styles.container1}>
+        <View testID="repositoryItem" style={styles.container1}>
             <View style={styles.container2}>
                 <View>
                     <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
