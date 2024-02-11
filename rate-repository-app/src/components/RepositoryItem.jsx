@@ -1,7 +1,9 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
 import { numberInKs } from "../utils";
+import { useNavigate } from "react-router-native";
+import * as Linking from "expo-linking";
 
 const styles = StyleSheet.create({
     container1: {
@@ -40,9 +42,9 @@ const BottomViews = ({ number, text }) => {
         </View>
     );};
 
-const RepositoryItem = ({ item }) => {
+const BasicItem = ({ item }) => {
     return (
-        <View testID="repositoryItem" style={styles.container1}>
+        <>
             <View style={styles.container2}>
                 <View>
                     <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
@@ -68,6 +70,28 @@ const RepositoryItem = ({ item }) => {
             </View>
             
             
+        </>
+    );};
+
+const RepositoryItem = ({ item }) => {
+    const navigate = useNavigate();
+    if(!item.url) return (
+        <Pressable onPress={() => navigate(`/repository/${item.id}`)} >
+            <View testID="repositoryItem" style={styles.container1}>
+                <BasicItem item={item} />
+            </View>
+        </Pressable>
+    );
+    return (
+        <View testID="repositoryItem" style={styles.container1}>
+            <BasicItem item={item} />
+            <Pressable onPress={() => Linking.openURL(item.url)}>
+                <Text
+                    fontSize="subheading"
+                    style={{ backgroundColor: theme.colors.primary, padding: 10, borderRadius: 5, margin: 10, color: "white", textAlign: "center" }}>
+                    Go to Repository
+                </Text>
+            </Pressable>
         </View>
     );
 };

@@ -31,7 +31,7 @@ const AppBar = () => {
     const authStorage = useAuthStorage();
     const apolloClient = useApolloClient();
     const navigate = useNavigate();
-    const { data, loading } = useQuery(ME);
+    const { data, loading } = useQuery(ME, { fetchPolicy: "cache-and-network" });
 
     const signOut = async () => {
         console.log("signin out...");
