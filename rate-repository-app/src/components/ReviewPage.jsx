@@ -31,15 +31,15 @@ const ReviewForm = ({ onSubmit }) => {
 const validationSchema = yup.object().shape({
     ownerName: yup
         .string()
-        .required(),
+        .required("Repository owner's name is required"),
     repositoryName: yup
         .string()
-        .required(),
+        .required("Repository name is required"),
     rating: yup
         .number()
         .min(0)
         .max(100)
-        .required(),
+        .required("Rating is required"),
     text: yup
         .string()
 });
@@ -60,7 +60,6 @@ const ReviewPage = () => {
     const [createReview] = useCreateReview();
 
     const onSubmit = async (values, formikBag) => {
-        //const { repositoryOwner, repositoryName, rating, review } = values;
         try {
             const repositoryId = await createReview({ ...values, rating: parseInt(values.rating) });
             navigate(`/repository/${repositoryId}`);
