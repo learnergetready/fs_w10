@@ -31,19 +31,15 @@ const AppBar = () => {
     const authStorage = useAuthStorage();
     const apolloClient = useApolloClient();
     const navigate = useNavigate();
-    const { data, loading } = useQuery(ME, { fetchPolicy: "cache-and-network" });
+    const { data } = useQuery(ME, { fetchPolicy: "cache-and-network" });
 
     const signOut = async () => {
-        console.log("signin out...");
         await authStorage.removeAccessToken();
         await apolloClient.resetStore();
-        console.log("signed out");
         navigate("/signin");
     };
 
-    if(loading) return null;
-    console.log(data);
-    const isSignedIn = data.me !== null;
+    const isSignedIn = data?.me !== null;
     return (
         <View style={styles.container}>
             <ScrollView horizontal >
@@ -53,6 +49,7 @@ const AppBar = () => {
                 {!isSignedIn && <Link to="/signin"><Text style={styles.text} fontSize="subheading" >Sign in</Text></Link>}
                 {!isSignedIn && <Link to="/signup"><Text style={styles.text} fontSize="subheading" >Sign up</Text></Link>}
                 {isSignedIn && <Link to="/review"><Text style={styles.text} fontSize="subheading" >Post review</Text></Link>}
+                {isSignedIn && <Link to="/myReviews"><Text style={styles.text} fontSize="subheading" >My reviews</Text></Link>}
                 {isSignedIn && <Pressable onPress={signOut}><Text style={styles.text} fontSize="subheading" >Sign out</Text></Pressable>}
             </ScrollView>
         </View>
