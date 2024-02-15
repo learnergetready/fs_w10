@@ -21,9 +21,7 @@ const Sorters = () => {
         <View>
             <TextInput 
                 value={filter}
-                onValueChange={(itemValue) => {
-                    setFilter(itemValue);
-                }}
+                onChangeText={setFilter}
                 placeholder="Search by repository and owner name"
             />
             <Picker
@@ -79,9 +77,10 @@ export class RepositoryListContainer extends Component {
                     ItemSeparatorComponent={ItemSeparator}
                     renderItem={({ item }) => <RepositoryItem item={item} />}
                     keyExtractor={item => item.id}
-                    ListHeaderComponent={() => this.renderHeader()}
+                    ListHeaderComponent={this.renderHeader()}
                     onEndReached={this.onEndReached}
                     onEndReachedThreshold={.5}
+                    initialNumToRender={6}
                 />
             </View>
         );
@@ -92,7 +91,7 @@ const RepositoryList = () => {
     const [orderBy, setOrderBy] = useState("CREATED_AT");
     const [orderDirection, setOrderDirection] = useState("DESC");
     const [order, setOrder] = useState("Latest repositories");
-    const [filter, setFilter] = useState("rails");
+    const [filter, setFilter] = useState("");
     const [searchKeyword] = useDebounce(filter, 500);
 
     const { repositories, fetchMore } = useRepositories({ first: 6, orderBy, orderDirection, searchKeyword });
