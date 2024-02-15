@@ -61,11 +61,17 @@ const ItemSeparator = () => <View style={styles.separator} />;
 export class RepositoryListContainer extends Component {
     renderHeader = () => <Sorters />;
 
+    onEndReached = () => {
+        const { fetchMore } = this.props;
+        fetchMore();
+    };
+
     render() {
         const { repositories } = this.props;
         const repositoryNodes = repositories
             ? repositories.edges.map(edge => edge.node)
             : [];
+
         return (
             <View style={{ paddingBottom: 100 }} >
                 <FlatList
@@ -74,6 +80,8 @@ export class RepositoryListContainer extends Component {
                     renderItem={({ item }) => <RepositoryItem item={item} />}
                     keyExtractor={item => item.id}
                     ListHeaderComponent={() => this.renderHeader()}
+                    onEndReached={this.onEndReached}
+                    onEndReachedThreshold={.5}
                 />
             </View>
         );
@@ -84,14 +92,17 @@ const RepositoryList = () => {
     const [orderBy, setOrderBy] = useState("CREATED_AT");
     const [orderDirection, setOrderDirection] = useState("DESC");
     const [order, setOrder] = useState("Latest repositories");
-    const [filter, setFilter] = useState("");
+    const [filter, setFilter] = useState("rails");
     const [searchKeyword] = useDebounce(filter, 500);
 
-    const { repositories } = useRepositories(orderBy, orderDirection, searchKeyword);
-    
+    const { repositories, fetchMore } = useRepositories({ first: 6, orderBy, orderDirection, searchKeyword });
+
     return(
         <SorterContext.Provider value={{ order, setOrder, setOrderBy, setOrderDirection, filter, setFilter }}>
-            <RepositoryListContainer repositories={repositories} />
+            <RepositoryListContainer
+                repositories={repositories}
+                fetchMore={fetchMore}
+            />
         </SorterContext.Provider>
     );};
 
